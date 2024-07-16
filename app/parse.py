@@ -58,18 +58,25 @@ def parse_product(product: BeautifulSoup) -> Product:
     )
 
 
-def scrape_page(url, category):
+def scrape_page(url: str, category: str) -> None:
     response = requests.get(url)
-    soup = BeautifulSoup(response.text, 'html.parser')
+    soup = BeautifulSoup(response.text, "html.parser")
     product_soup = soup.select(".thumbnail")
     products = [parse_product(product) for product in product_soup]
     save_to_csv(products, f"{category}.csv")
 
 
-def save_to_csv(products, filename):
-    with open(filename, mode='w', newline='', encoding='utf-8') as file:
+def save_to_csv(products: list, filename: str) -> None:
+    with open(filename, mode="w", newline="", encoding="utf-8") as file:
         writer = csv.writer(file)
-        writer.writerow(['title', 'description', 'price', 'rating', 'num_of_reviews', 'additional_info'])
+        writer.writerow([
+            "title",
+            "description",
+            "price",
+            "rating",
+            "num_of_reviews",
+            "additional_info"
+        ])
         for product in products:
             writer.writerow([
                 product.title,
