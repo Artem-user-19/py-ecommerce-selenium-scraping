@@ -22,10 +22,6 @@ class Product:
     additional_info: dict
 
 
-# url = requests.get(HOME_URL).content
-# soup = BeautifulSoup(url, "html.parser")
-
-
 def parse_hdd_block_prices(product_soup: BeautifulSoup) -> dict[str, float]:
     detailed_url = urljoin(HOME_URL, product_soup.select_one(".title")["href"])
     driver = webdriver.Chrome()
